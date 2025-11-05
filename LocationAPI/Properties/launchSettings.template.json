@@ -35,7 +35,7 @@
       "environmentVariables": {
         "ASPNETCORE_HTTPS_PORTS": "8081",
         "ASPNETCORE_HTTP_PORTS": "8080",
-        "TIMESCALE_CONN_STRING": "Host=host.docker.internal;Port=5432;Database=mydb;Username=postgres;Password=postgres;Trust Server Certificate=true;"
+        "TIMESCALE_CONN_STRING": ""
       },
       "publishAllPorts": true,
       "useSSL": true

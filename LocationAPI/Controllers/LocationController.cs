@@ -1,57 +1,68 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Locations.Classes;
 using Locations.Models;
-using System.Xml.Linq;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+
 
 namespace Locations.Controllers
 {
-    [ApiController]
-	[Route("/location/[controller]")]
+	[ApiController]
+	[Route("/car")]
 	public class LocationController : ControllerBase
-    {
-        private readonly ILogger<LocationController> _logger;
+	{
+		private readonly ILogger<LocationController> _logger;
 		private readonly IDbContextFactory<PostgresContext> _dbContextFactory;
 		public LocationController(ILogger<LocationController> logger, IDbContextFactory<PostgresContext> dbContextFactory)
-        {
-            _logger = logger;
-            _dbContextFactory = dbContextFactory;
-		}
-
-		[HttpGet("{id}")]
-		public IActionResult Get(string id)
 		{
-			using (var dbContext = _dbContextFactory.CreateDbContext())
-			{
-				var registration = (from r in dbContext.Registrations
-									from l in dbContext.LookupRegistrations
-									where r.RegionId == l.Id && r.CarId == id
-									select new {Id = r.CarId, Region = l.Region})
-					.FirstOrDefault();
-
-				if (registration == null)
-				{
-					return NotFound(new { message = "Registration not found!" });
-				}
-
-				return Ok(registration);
-			}
+			_logger = logger;
+			_dbContextFactory = dbContextFactory;
 		}
 
 		[HttpGet]
-		public IActionResult Get()
+		public IActionResult Get([FromQuery] int? timeframe)
 		{
 			using (var dbContext = _dbContextFactory.CreateDbContext())
 			{
 				var positions = from pos in dbContext.CarGpsData select pos;
 
-				if (positions == null)
+				if (timeframe.HasValue)
 				{
-					return NotFound(new { message = "Registrations not found!" });
+					var cuttoff = DateTime.UtcNow.AddDays(-timeframe.Value);
+					positions = positions.Where(pos => pos.Time >= cuttoff);
 				}
 
-				return Ok(positions.ToList());
+				var resultList = positions.ToList();
+
+				if (!resultList.Any())
+				{
+					return NotFound(new { message = "No GPS data found for the specified criteria." });
+				}
+
+				return Ok(resultList);
+			}
+		}
+
+		[HttpGet("/car/{carId}")]
+		public IActionResult Get(string? carId, [FromQuery] int? timeframe)
+		{
+			using (var dbContext = _dbContextFactory.CreateDbContext())
+			{
+				// Lazy
+				var positions = from pos in dbContext.CarGpsData where pos.CarId == carId select pos;
+
+				if (timeframe.HasValue)
+				{
+					var cuttoff = DateTime.UtcNow.AddDays(-timeframe.Value);
+					positions = positions.Where(pos => pos.Time >= cuttoff);
+				}
+
+				var resultList = positions.ToList();
+
+				if (!resultList.Any())
+				{
+					return NotFound(new { message = "No GPS data found for the specified criteria." });
+				}
+
+				return Ok(resultList);
 			}
 		}
 	}

@@ -363,3 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 /LocationAPI/Properties/launchSettings.json
 /LocationAPI/efpt.config.json
+/LocationAPI/Properties/launchSettings.json
+/LocationAPI/efpt.config.json

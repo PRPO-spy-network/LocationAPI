@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36623.8 d17.14
+VisualStudioVersion = 17.14.36623.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocationAPI", "LocationAPI\LocationAPI.csproj", "{0A048700-6E31-487E-85A6-0D1AA640C237}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocationAPI.tests", "LocationAPI.tests\LocationAPI.tests.csproj", "{C810F85E-557D-47B3-B360-5C56BE8726C5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{0A048700-6E31-487E-85A6-0D1AA640C237}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A048700-6E31-487E-85A6-0D1AA640C237}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A048700-6E31-487E-85A6-0D1AA640C237}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C810F85E-557D-47B3-B360-5C56BE8726C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C810F85E-557D-47B3-B360-5C56BE8726C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C810F85E-557D-47B3-B360-5C56BE8726C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C810F85E-557D-47B3-B360-5C56BE8726C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

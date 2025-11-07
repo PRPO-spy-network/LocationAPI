@@ -18,16 +18,24 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+var logger = app.Logger;
+
+if (app.Environment.IsDevelopment())
+{
+	logger.LogInformation("Running in dev mode");
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
+else
+{
+	app.UseHttpsRedirection();
+	// app.UseAuthorization();
+}
 
 app.MapControllers();
 
